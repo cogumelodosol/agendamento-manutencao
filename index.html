@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agendamento de Manutenção</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      max-width: 250px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #007BFF;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Ajuste no textarea */
+    .form-group textarea {
+      resize: vertical; /* Permite expandir verticalmente */
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: 100%;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="PRETA-8.png" alt="Logo da Empresa" class="logo">
+    <h1>Agendamento de Manutenção</h1>
+    <p>Agende seu serviço de manutenção de forma rápida e fácil.</p>
+  </header>
+
+  <main>
+    <form id="agendamentoForm">
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required />
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" required />
+      </div>
+
+      <div class="form-group">
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="data">Data:</label>
+        <input type="date" id="data" name="data" required />
+      </div>
+
+      <div class="form-group">
+        <label for="horario">Horário:</label>
+        <input type="time" id="horario" name="horario" required />
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição do problema:</label>
+        <textarea id="descricao" name="descricao" rows="4" required></textarea>
+      </div>
+
+      <button type="submit">Agendar</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Entre em contato:</p>
+    <p>Email: esquadrias.grado@gmail.com | WhatsApp: (61) 99219-1071</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("bn7o_FECIYEULdW3h");
+    })();
+
+    document.getElementById("agendamentoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const telefone = document.getElementById("telefone").value;
+      const endereco = document.getElementById("endereco").value;
+      const email = document.getElementById("email").value;
+      const data = document.getElementById("data").value;
+      const horario = document.getElementById("horario").value;
+      const descricao = document.getElementById("descricao").value;
+
+      const templateParams = {
+        nome: nome,
+        telefone: telefone,
+        endereco: endereco,
+        email: email,
+        data: data,
+        horario: horario,
+        descricao: descricao
+      };
+
+      emailjs.send("service_9p4gl5x", "template_3de6gfj", templateParams)
+        .then(function(response) {
+          alert("Agendamento enviado com sucesso!");
+          document.getElementById("agendamentoForm").reset();
+        }, function(error) {
+          alert("Erro ao enviar o agendamento.");
+          console.log("ERRO:", error);
+        });
+    });
+  </script>
+</body>
+</html>
